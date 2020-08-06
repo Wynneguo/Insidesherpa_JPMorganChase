@@ -1,0 +1,59 @@
+From 5b9f0601d7b6c0283add6ed6a7466f55fe690899 Mon Sep 17 00:00:00 2001
+From: guolu <694681762@qq.com>
+Date: Tue, 4 Aug 2020 15:16:19 +0000
+Subject: [PATCH] Create Patch File
+
+---
+ client3.py | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
+
+diff --git a/client3.py b/client3.py
+index f1771c3..15650d0 100644
+--- a/client3.py
++++ b/client3.py
+@@ -29,31 +29,29 @@ QUERY = "http://localhost:8080/query?id={}"
+ # 500 server request
+ N = 500
+ 
++#Produce all of the needed values to generate a datapoint
+ def getDataPoint(quote):
+-	""" Produce all of the needed values to generate a datapoint """
+-	""" ------------- Update this function ------------- """
+-	stock = quote['stock']
++  stock = quote['stock']
+ 	bid_price = float(quote['top_bid']['price'])
+ 	ask_price = float(quote['top_ask']['price'])
+-	price = bid_price
++	price = (bid_price+ask_price)/2
+ 	return stock, bid_price, ask_price, price
+ 
++#Get ratio of price_a and price_b
+ def getRatio(price_a, price_b):
+-	""" Get ratio of price_a and price_b """
+-	""" ------------- Update this function ------------- """
+-	""" Also create some unit tests for this function in client_test.py """
+-	return 1
++  if(price_b==0): #avoid ZeroDivisionError
++    return 
++	return price_a/price_b
+ 
+ # Main
+ if __name__ == "__main__":
+ 
+ 	# Query the price once every N seconds.
+-	for _ in iter(range(N)):
++  #ABC DEF are the stock name 
++	for _ in range(N):
+ 		quotes = json.loads(urllib.request.urlopen(QUERY.format(random.random())).read())
+-
+-		""" ----------- Update to get the ratio --------------- """
+ 		for quote in quotes:
+-			stock, bid_price, ask_price, price = getDataPoint(quote)
++      stock, bid_price, ask_price, price = getDataPoint(quote)
+ 			print ("Quoted %s at (bid:%s, ask:%s, price:%s)" % (stock, bid_price, ask_price, price))
+ 
+-		print ("Ratio %s" % getRatio(price, price))
++		print ("Ratio %s" % (getRatio(price['ABC'], price['DEF'])))
+-- 
+2.17.1
+
