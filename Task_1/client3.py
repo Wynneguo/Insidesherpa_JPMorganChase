@@ -46,6 +46,7 @@ def getRatio(price_a, price_b):
 # Main
 # Query the price once every N seconds.
 #ABC DEF are the stock name 
+#ask_price and bid_price for ABC and DEF stocks
 if __name__ == "__main__":
   for _ in range(N):
     quotes = json.loads(urllib.request.urlopen(QUERY.format(random.random())).read())
